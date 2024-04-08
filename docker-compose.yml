@@ -1,0 +1,71 @@
+version: "3"
+services:
+    laravel.app:
+        image: mcr.microsoft.com/vscode/devcontainers/php:8
+        entrypoint: []
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        ports:
+            - "${APP_PORT:-8000}:8000"
+            - "${VITE_PORT:-5173}:${VITE_PORT:-5173}"
+        environment:
+            IGNITION_LOCAL_SITES_PATH: "${PWD}"
+        volumes:
+            - ".:/app"
+        networks:
+            - microblogging
+        depends_on:
+            - pgsql
+            - selenium
+    pgsql:
+        image: "postgres:15"
+        ports:
+            - "${FORWARD_DB_PORT:-5432}:5432"
+        environment:
+            PGPASSWORD: "${DB_PASSWORD:-secret}"
+            POSTGRES_DB: "${DB_DATABASE}"
+            POSTGRES_USER: "${DB_USERNAME}"
+            POSTGRES_PASSWORD: "${DB_PASSWORD:-secret}"
+        volumes:
+            - "microblogging-pgsql:/var/lib/postgresql/data"
+            # - "./vendor/laravel/sail/database/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql"
+        networks:
+            - microblogging
+        healthcheck:
+            test:
+                - CMD
+                - pg_isready
+                - "-q"
+                - "-d"
+                - "${DB_DATABASE}"
+                - "-U"
+                - "${DB_USERNAME}"
+            retries: 3
+            timeout: 5s
+    pgadmin:
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: "${PGADMIN_DEFAULT_EMAIL}"
+            PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}"
+        volumes:
+            - microblogging-pgadmin:/var/lib/pgadmin
+        ports:
+            - "${PGADMIN_PORT:-5050}:80"
+        networks:
+            - microblogging
+    selenium:
+        image: seleniarm/standalone-chromium
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        volumes:
+            - "/dev/shm:/dev/shm"
+        networks:
+            - microblogging
+networks:
+    microblogging:
+        driver: bridge
+volumes:
+    microblogging-pgsql:
+        driver: local
+    microblogging-pgadmin:
+        driver: local

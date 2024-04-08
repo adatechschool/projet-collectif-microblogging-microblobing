@@ -1,0 +1,30 @@
+// https://aka.ms/devcontainer.json
+{
+	"name": "PHP-8 Laravel-10",
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {}
+	},
+	"service": "laravel.app",
+	"workspaceFolder": "/app",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"DEVSENSE.phptools-vscode",
+				"mikestead.dotenv",
+				"amiralizadeh9480.laravel-extra-intellisense",
+				"onecentlin.laravel5-snippets",
+				"onecentlin.laravel-blade",
+				"ryannaddy.laravel-artisan",
+				"usernamehw.errorlens"
+			],
+			"settings": {}
+		}
+	},
+	"forwardPorts": [
+		8000
+	],
+	"postCreateCommand": "sudo -E /bin/sh .devcontainer/entrypoint.sh"
+}

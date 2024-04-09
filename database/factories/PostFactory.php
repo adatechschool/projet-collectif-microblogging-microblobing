@@ -18,6 +18,7 @@ class PostFactory extends Factory
     {
         return [
             "title" => fake()->sentence(3), // Une phrase de 5 mots
+            "picture" => fake() -> imageUrl(),
             "content" => fake()->text(), 
             "tag" => fake() -> sentence(1),// Une chaîne de texte de 200 caractères (par défaut)
             "user_id" => User::inRandomOrder()->first()

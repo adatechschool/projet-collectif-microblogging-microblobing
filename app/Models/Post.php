@@ -17,7 +17,7 @@ class Post extends Model
         'tag'
     ];
 
-    public function posts(): HasOne
+    public function users(): HasOne
 {
     return $this->hasOne(User::class);
 }

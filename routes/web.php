@@ -33,3 +33,9 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/post/{id}', [PostController::class, 'show']);
+
+Route::resource('posts', PostController::class)
+
+    ->only(['index', 'store'])
+
+    ->middleware(['auth', 'verified']);

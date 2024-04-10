@@ -8,6 +8,6 @@
 
     </head>
     <body>
-        <h1>{{ $post->title }}</h1>
-        <p>{{ $post->content }}</p>
+        <h1>{{ $displayPost->title }}</h1>
+        <p>{{ $displayPost->content }}</p>
     </body>

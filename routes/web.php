@@ -36,6 +36,6 @@ Route::get('/post/{id}', [PostController::class, 'show']);
 
 Route::resource('posts', PostController::class)
 
-    ->only(['index', 'store'])
+    ->only(['index', 'store', 'edit', 'update'])
 
     ->middleware(['auth', 'verified']);

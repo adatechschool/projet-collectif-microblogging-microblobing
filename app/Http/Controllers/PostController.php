@@ -67,4 +67,10 @@ public function store(Request $request): RedirectResponse
         return redirect(route('posts.index'));
 
     }
+
+    public function destroy(Post $post): RedirectResponse  {
+        Gate::authorize('delete', $post);
+        $post->delete();
+        return redirect(route('posts.index'));
+    }
 }

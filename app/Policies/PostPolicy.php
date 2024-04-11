@@ -43,10 +43,10 @@ class PostPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    // public function delete(User $user, Post $post): bool
-    // {
-    //     //
-    // }
+    public function delete(User $user, Post $post): bool
+    {
+        return $this->update($user, $post);
+    }
 
     // /**
     //  * Determine whether the user can restore the model.

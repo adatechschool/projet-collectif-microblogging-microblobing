@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 
 class PostController extends Controller
@@ -19,4 +21,17 @@ public function index(): View
 {
 return view('index');
 }
+
+public function store(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'title'=> 'required|string|max:50',
+            'picture' => 'required|string|max:255',
+            'content' => 'required|string|max:255',
+            'tag' => 'required|string|max:20',
+        ]);
+        $request->user()->posts()->create($validated);
+        return redirect(route('posts.index'));
+
+    }
 }

@@ -19,7 +19,9 @@ class PostController extends Controller
 
 public function index(): View
 {
-return view('index');
+return view('index', [
+    'posts' => Post::with('user')->latest()->get(),
+]);
 }
 
 public function store(Request $request): RedirectResponse

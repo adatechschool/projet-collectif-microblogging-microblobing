@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
-    //
+    // Affiche la page du post selon son ID
     public function show($id): View
     {
     $post = Post::findOrFail($id);

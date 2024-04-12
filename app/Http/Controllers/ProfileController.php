@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
+use App\Models\Post;
 
 class ProfileController extends Controller
 {
@@ -58,5 +60,20 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    // Display user page selon l'ID
+
+    
+    public function show($id): View
+    {
+        // Récupérer l'utilisateur par son ID
+        $user = User::findOrFail($id);
+        
+        // Récupérer tous les posts de cet utilisateur
+        $posts = Post::where('user_id', $user->id)->get();
+        
+        // Passer les posts et l'utilisateur à la vue
+        return view('userPage', ['user' => $user, 'posts' => $posts]);
     }
 }

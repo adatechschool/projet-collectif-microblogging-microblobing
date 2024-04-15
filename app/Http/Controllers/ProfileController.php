@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\User;
 use App\Models\Post;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -65,18 +66,42 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    // Display user page selon l'ID
-
-    
-    public function show($id): View
+    // Display user page by ID or name :
+    public function show($identifier): View
     {
-        // Récupérer l'utilisateur par son ID
-        $user = User::findOrFail($id);
-        
-        // Récupérer tous les posts de cet utilisateur
-        $posts = Post::where('user_id', $user->id)->get();
-        
+        // Vérifie si l'identifiant est un nombre (ID d'utilisateur) et le récupère
+        if (is_numeric($identifier)) {
+            $user = User::findOrFail($identifier);
+        } else {
+            // ou récupère le name
+            $user = User::where('name', $identifier)->firstOrFail();
+        }
+        // Récupère tous les posts de cet utilisateur
+        $posts = $user->posts;
+    
         // Passer les posts et l'utilisateur à la vue
         return view('userPage', ['user' => $user, 'posts' => $posts]);
+    }
+
+    // Search User by name
+    public function search(Request $request)
+    {
+        $request->validate([
+            'searchByName' => 'required|string',
+        ]);
+
+        // Récupère la valeur de l'input recherche
+        $name = $request->input('searchByName');
+
+        // Recherche l'utilisateur par son nom
+        $user = User::where('name', $name)->first();
+        $posts = $user->posts;
+
+        // Vérifie si l'utilisateur est trouvé et affiche la UserPage
+        if ($user) {
+            return view('userPage', ['user' => $user, 'posts' => $posts]);
+        } else {
+            return back()->with('error', 'Utilisateur non trouvé');
+        }
     }
 }

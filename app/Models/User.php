@@ -48,6 +48,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    //Search User by name
+    public static function searchByName($name){
+    return User::where('name', 'like', '%' . $name . '%')->first();
+    }
     
 }
 

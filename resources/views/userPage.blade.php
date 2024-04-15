@@ -6,7 +6,7 @@
         <p class="mt-4 text-xl text-white">Welcome on {{ $user->name }}'s profile !</p>
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
-            <p class="mt-4 text-lg text-gray-900 p-4">{{ $user->biography }} !</p>
+            <p class="mt-4 text-lg text-gray-900 p-4">{{ $user->biography }}</p>
         </div>
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">

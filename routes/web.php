@@ -15,9 +15,11 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/', PostController::class)
+
+    ->only(['index', 'store', 'edit', 'update', 'destroy'])
+
+    ->middleware(['auth', 'verified']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

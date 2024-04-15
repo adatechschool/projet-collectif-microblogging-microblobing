@@ -16,10 +16,12 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
-
-                        {{ __('Posts') }}
-                
+                        {{ __('Posts') }}     
                     </x-nav-link>
+                    <x-nav-link :href="route('users.show', Auth::user())" :active="request()->routeIs('users.show', ['user' => Auth::user()])">
+                        {{ __('My Page') }}     
+                    </x-nav-link>
+                    
                 </div>
             </div>
 

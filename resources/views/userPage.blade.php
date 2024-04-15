@@ -3,6 +3,12 @@
       
         {{-- Afficher les posts du user connecté --}}
 
+        <p class="mt-4 text-xl text-white">Welcome on {{ $user->name }}'s profile !</p>
+
+        <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
+            <p class="mt-4 text-lg text-gray-900 p-4">{{ $user->biography }} !</p>
+        </div>
+
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
 
             @foreach ($posts as $post)
@@ -18,7 +24,10 @@
                     <div class="flex-1">
                         <div class="flex justify-between items-center">
                             <div>
-                                <span class="text-gray-800">{{ $post->user->name }}</span>
+                                <span class="text-gray-800"><a href="/users/{{ $post->user->id }}" class="text-gray-800">
+                                    {{ $post->user->name }}
+                                </a>
+                                </span>
                                 <small class="ml-2 text-sm text-gray-600">{{ $post->created_at->format('j M Y, g:i a') }}</small>
                                 @unless ($post->created_at->eq($post->updated_at))
                                     <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
@@ -50,7 +59,6 @@
                             </x-dropdown>
                         @endif
                         </div>
-                        <p class="mt-4 text-lg text-gray-900">{{ $post->biography }}</p>
                         <p class="mt-4 text-lg text-gray-900">{{ $post->content }}</p>
                     </div>
                 </div>

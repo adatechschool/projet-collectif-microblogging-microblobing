@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\welcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +16,16 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::resource('/', PostController::class)
+// Routes pour les utilisateurs connectés
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('/home', welcomeController::class)
+        ->only(['index', 'store', 'edit', 'update', 'destroy']);
+});
 
-    ->only(['index', 'store', 'edit', 'update', 'destroy'])
-
-    ->middleware(['auth', 'verified']);
+// Routes pour les utilisateurs non connectés
+Route::middleware('guest')->group(function () {
+    Route::get('/', [welcomeController::class, 'guestIndex']);
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -34,7 +40,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 
-Route::get('/post/{id}', [PostController::class, 'show']);
+Route::get('/user/{id}', [PostController::class, 'show']);
 
 Route::resource('posts', PostController::class)
 

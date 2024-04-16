@@ -25,6 +25,13 @@ return view('index', [
 ]);
 }
 
+public function guestIndex(): View
+{
+    $posts = Post::latest()->get();
+    
+    return view('welcomeNotConnected', ['posts' => $posts]);
+}
+
 public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([

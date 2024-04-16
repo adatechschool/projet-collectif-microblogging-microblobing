@@ -52,3 +52,5 @@ Route::resource('posts', PostController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
 
     ->middleware(['auth', 'verified']);
+
+Route::post('store', [PostController::class, "store"]);  

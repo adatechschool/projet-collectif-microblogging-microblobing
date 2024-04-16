@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 
 class PostController extends Controller
@@ -25,25 +26,36 @@ return view('index', [
 ]);
 }
 
-public function guestIndex(): View
+public function store(Request $request)
 {
-    $posts = Post::latest()->get();
-    
-    return view('welcomeNotConnected', ['posts' => $posts]);
-}
 
-public function store(Request $request): RedirectResponse
-    {
-        $validated = $request->validate([
+    
+    $this->validate($request, [
             'title'=> 'required|string|max:50',
-            'picture' => 'required|string|max:255',
+            'picture' => 'required|image|max:1024',
             'content' => 'required|string|max:255',
             'tag' => 'required|string|max:20',
         ]);
-        $request->user()->posts()->create($validated);
-        return redirect(route('posts.index'));
+
+        $chemin_image = $request->picture->store("public/posts");
+        $chemin_image = str_replace("public/", "", $chemin_image);
+       
+
+        Post::create([
+            "title" => $request->title,
+            "picture" => $chemin_image,
+            "content" => $request->content,
+            "tag" => $request->tag,
+            "updated_at"=> $request->updated_at,
+            "created_at"=> $request->created_at,
+            "user_id" => auth()->user()->id,
+        ]);
+        
+
+        return redirect(route("posts.index"));
 
     }
+    
     public function edit(Post $post): View
     {
         Gate::authorize('update', $post);
@@ -60,7 +72,7 @@ public function store(Request $request): RedirectResponse
 
         $validated = $request->validate([
              'title'=> 'required|string|max:50',
-             'picture' => 'required|string|max:255',
+             'picture' => 'required|image|max:1024',
             'content' => 'required|string|max:255',
              'tag' => 'required|string|max:20'
         ]);

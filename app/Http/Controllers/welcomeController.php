@@ -2,28 +2,34 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Post;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
-
-class PostController extends Controller
+class welcomeController extends Controller
 {
-    // Affiche la page du post selon son ID
-    public function show($id): View
+    public function showPosts()
     {
-    $post = Post::findOrFail($id);
-    return view('post', ['displayPost' => $post]);
-}
+        $posts = Post::all();
+    
+        if(Auth::check()) {
+            return view('welcome', ['posts' => $posts]);
+        } else {
+            return view('welcomeNotConnected', ['posts' => $posts]);
+        }
+    }
 
-public function index(): View
+    public function index(): View
 {
 return view('index', [
-    'posts' => Post::with('user')->latest()->get(),
+    'posts' => Post::latest()->get(),
 ]);
 }
+
 
 public function guestIndex(): View
 {
@@ -81,3 +87,6 @@ public function store(Request $request): RedirectResponse
         return redirect(route('posts.index'));
     }
 }
+
+   
+

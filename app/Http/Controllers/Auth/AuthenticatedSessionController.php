@@ -31,6 +31,12 @@ class AuthenticatedSessionController extends Controller
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
+//     public function store(LoginRequest $request): RedirectResponse
+// {
+//     // Code original qui régénère la session et redirige vers RouteServiceProvider::HOME
+//     $request->session()->regenerate();
+//     return redirect()->intended(RouteServiceProvider::HOME);
+// }
 
     /**
      * Destroy an authenticated session.

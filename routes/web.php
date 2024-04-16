@@ -42,7 +42,7 @@ require __DIR__.'/auth.php';
 Route::get('/users/{id}', [ProfileController::class, 'show'])->name('users.show');
 
 
-Route::get('/user/{id}', [PostController::class, 'show']);
+// Route::get('/user/{id}', [PostController::class, 'show']);
 Route::get('/search', [ProfileController::class, 'search']);
 
 

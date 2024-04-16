@@ -46,21 +46,16 @@ public function store(Request $request): RedirectResponse
     }
     public function edit(Post $post): View
     {
-
-
         Gate::authorize('update', $post);
 
         return view('editPost', [
 
             'post' => $post,
-
         ]);
 
     }
     public function update(Request $request, Post $post): RedirectResponse
     {
-
-
         Gate::authorize('update', $post);
 
         $validated = $request->validate([

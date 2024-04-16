@@ -1,8 +1,4 @@
-{{-- @if (Auth::check())
-    @include('welcome', ['posts' => $posts])
-@else
-    @include('welcomeNotConnected', ['posts' => $posts])
-@endif --}}
+
 
 <x-app-layout>
     <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
@@ -62,7 +58,9 @@
                             <div>
                                 {{-- pour rajouter un lien cliquable sur le profil quand la route sera prête --}}
                                 <span class="text-gray-800">
-                                    <a class="btn btn-primary" role="button" href="{{ route('user.profile', ['id' => $post->user->id]) }}">{{ $post->user->name }}</a>
+                                    <a href="{{ route('users.show', $post->user->id) }}" class="text-gray-800">
+                                        {{ $post->user->name }}
+                                    </a>
                                 </span>
                                 
                                 <small class="ml-2 text-sm text-gray-600">{{ $post->created_at->format('j M Y, g:i a') }}</small>

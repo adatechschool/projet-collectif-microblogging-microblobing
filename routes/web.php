@@ -24,7 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Routes pour les utilisateurs non connectés
 Route::middleware('guest')->group(function () {
-    Route::get('/', [welcomeController::class, 'guestIndex']);
+    Route::get('/', [welcomeController::class, 'showPosts']);
 });
 
 Route::get('/dashboard', function () {

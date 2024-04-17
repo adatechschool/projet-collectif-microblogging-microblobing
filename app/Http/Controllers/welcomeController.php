@@ -12,9 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class welcomeController extends Controller
 {
+
+    //vérifie si l'utilisateur est connecté pour l'orienter vers la bonne page
     public function showPosts()
     {
-        $posts = Post::all();
+        $posts = Post::latest()->get();
     
         if(Auth::check()) {
             return view('welcome', ['posts' => $posts]);
@@ -22,7 +24,9 @@ class welcomeController extends Controller
             return view('welcomeNotConnected', ['posts' => $posts]);
         }
     }
-
+    
+      
+    
     public function index(): View
 {
 return view('index', [
@@ -30,13 +34,6 @@ return view('index', [
 ]);
 }
 
-
-public function guestIndex(): View
-{
-    $posts = Post::latest()->get();
-    
-    return view('welcomeNotConnected', ['posts' => $posts]);
-}
 
 public function store(Request $request): RedirectResponse
     {

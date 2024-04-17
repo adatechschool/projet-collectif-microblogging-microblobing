@@ -19,6 +19,10 @@
                         @endif
                     </div>
                 </div>
+                <p class="mt-4 text-xl text-gray-900">{{ $post->title }}</p>
+                
+                <img src="{{ asset('storage/' . $post->picture) }}" alt="Post picture" style="max-width: 500px;">
+
                 <p class="mt-4 text-lg text-gray-900">{{ $post->content }}</p>
             </div>
         </div>

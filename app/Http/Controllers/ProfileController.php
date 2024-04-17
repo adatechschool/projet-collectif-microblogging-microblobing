@@ -77,7 +77,7 @@ class ProfileController extends Controller
             $user = User::where('name', $identifier)->firstOrFail();
         }
         // Récupère tous les posts de cet utilisateur
-        $posts = $user->posts;
+         $posts = $user->posts()->latest()->get();
     
         // Passer les posts et l'utilisateur à la vue
         return view('userPage', ['user' => $user, 'posts' => $posts]);
@@ -95,7 +95,7 @@ class ProfileController extends Controller
 
         // Recherche l'utilisateur par son nom
         $user = User::where('name', $name)->first();
-        $posts = $user->posts;
+        $posts = $user->posts()->latest()->get();
 
         // Vérifie si l'utilisateur est trouvé et affiche la UserPage
         if ($user) {

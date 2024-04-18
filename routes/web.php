@@ -42,15 +42,16 @@ require __DIR__.'/auth.php';
 Route::get('/users/{id}', [ProfileController::class, 'show'])->name('users.show');
 
 
-// Route::get('/user/{id}', [PostController::class, 'show']);
 Route::get('/search', [ProfileController::class, 'search']);
 
 
-
+// Route de création, édition, suppression, affichage... des posts
 Route::resource('posts', PostController::class)
 
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
 
     ->middleware(['auth', 'verified']);
 
+
+// Route d'enregistrement des posts
 Route::post('store', [PostController::class, "store"]);  

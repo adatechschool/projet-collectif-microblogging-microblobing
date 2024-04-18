@@ -36,8 +36,9 @@ public function store(Request $request)
             'content' => 'required|string|max:255',
             'tag' => 'required|string|max:20',
         ]);
-
+//Crée le chemin d'accès à l'image et l'enregistre via la méthode store
         $chemin_image = $request->picture->store("public/posts");
+//Supprime la partie "/public" du chemin d'accès à l'accès pour faciliter son affichage
         $chemin_image = str_replace("public/", "", $chemin_image);
        
 

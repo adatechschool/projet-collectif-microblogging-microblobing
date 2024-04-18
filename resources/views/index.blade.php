@@ -7,15 +7,14 @@
 
             <textarea
                 name="title"
-                placeholder="{{ __('Titre') }}"
-                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                placeholder="{{ __('Title') }}"
+                class="mb-2 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             >{{ old('title') }}</textarea>
             <x-input-error :messages="$errors->get('title')" class="mt-2" />
                 
                 <p>
-                    <label for="picture" >Couverture</label><br/>
-                    <input type="file" name="picture" id="picture" >
-        
+                    <!-- Composant bouton d'upload des images -->
+                    <x-upload-picture class="mb-1 mt-2">{{ __('Upload Picture') }}</x-upload-picture>        
                     <!-- Le message d'erreur pour "picture" -->
                     @error("picture")
                     <div>{{ $message }}</div>
@@ -25,7 +24,7 @@
             <textarea
                 name="content"
                 placeholder="{{ __('What\'s on your mind ?') }}"
-                class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                class="mt-2 mb-2 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             >{{ old('content') }}</textarea>
             <x-input-error :messages="$errors->get('content')" class="mt-2" />
 
@@ -35,14 +34,15 @@
                 class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
             >{{ old('tag') }}</textarea>   
             <x-input-error :messages="$errors->get('tag')" class="mt-2" />       
-
-            <x-primary-button class="mt-4">{{ __('Post') }}</x-primary-button>
+                    <x-primary-button class="mt-2 ">{{ __('Post') }}</x-primary-button>
+                
+            
         </form>
 
 
         {{-- Afficher les posts du user connecté --}}
 
-        <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
+        <div class="mt-12 bg-white shadow-sm rounded-lg divide-y">
 
             @foreach ($posts as $post)
 
